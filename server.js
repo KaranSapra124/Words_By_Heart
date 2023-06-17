@@ -33,8 +33,8 @@ app.set('view engine','ejs');
 
 
 
-app.get('/Chat',(req,res)=>{
-   res.render('index')
+app.get('/',(req,res)=>{
+   res.render('Login')
 })
 
 app.get('/Login',(req,res)=>{
