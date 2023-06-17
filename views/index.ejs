@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bakchodi</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+<link rel="manifest" href="site.webmanifest">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+</head>
+<style>
+    .chat-container {
+        max-width: 500px;
+        margin: 0 auto;
+        padding: 20px;
+        border: 1px solid #ccc;
+    }
+
+    .chat-message {
+        margin-bottom: 10px;
+    }
+
+    .chat-message .message-content {
+        padding: 10px;
+        border-radius: 10px;
+    }
+
+    .sender .message-content {
+        background-color: #DCF8C6;
+        text-align: right;
+        left: auto;
+        /* margin-left: 100px; */
+    }
+
+    .receiver .message-content {
+        background-color: #F3F3F3;
+        text-align: left;
+        right: auto;
+        /* margin-right: 100px; */
+    }
+
+    .input-container {
+        margin-top: 20px;
+    }
+</style>
+
+<body>
+
+    <div class="container  d-flex flex-column justify-content-center align-items-center">
+        <h1>Words By Heart ❤</h1>
+        <% var name="" %>
+            <% Data.map((elem)=>{ %>
+                <div class="text-center text-bold">
+                    <% name=elem.Name %>
+                        <p class="NameStr">
+                            <%= elem.Name%>
+                                is connected
+                        </p>
+                </div>
+                <% }) %>
+                    <ul class="List  mb-2 px-2 py-2 ">
+                        <div class="chat-message">
+                            <div class="message-content">
+                                <!-- <p>Hi there!</p> -->
+                            </div>
+                        </div>
+
+                    </ul>
+                    <form class="form">
+                        <input type="text" name="Message" id="MessageInp" placeholder="Enter Your Message...">
+                       
+                        <button class="btn btn-primary d-flex text-center mt-2">Send</button>
+                    </form>
+    </div>
+
+
+
+
+
+
+
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+    <script>
+        var socket = io()
+        var List = document.querySelector('.List')
+        List.style.display = "none"
+        var MessageCont = document.querySelector('.message-content')
+        var form = document.querySelector('.form')
+        var inp = document.getElementById("MessageInp");
+        var currUser = document.querySelector('.NameStr');
+        console.log(currUser.innerHTML.substring(0, currUser.innerHTML.indexOf(' is connected')));
+        form.addEventListener('submit', ('submit', (e) => {
+            e.preventDefault()
+            List.style.display = "block"
+            if (inp.value) {
+                socket.emit('chat message', inp.value)
+                inp.value = ''
+            }
+
+
+        }))
+
+        socket.on('chat message', (msg) => {
+            var MessageCont = document.querySelector('.message-content')
+            var message = document.createElement('div');
+            message.classList.add('chat-message');
+
+            if (msg.sender == currUser) {
+                message.classList.add('sender');
+            } else {
+                message.classList.add('receiver');
+            }
+            var messageContent = document.createElement('div');
+            messageContent.classList.add('message-content');
+            messageContent.innerHTML += `<p>${msg}</p>`
+            message.appendChild(messageContent);
+            List.appendChild(message);
+        })
+    </script>
+</body>
+
+
+</html>

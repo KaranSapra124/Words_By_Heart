@@ -1,0 +1,64 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+.container{
+   height: 100%;
+    width: 100%;
+    padding: 2rem;
+    font-size: 2rem;
+}
+
+.List{
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    flex-direction: column;
+    font-family: cursive;
+    /* text-align: center;
+    /* margin-left: 100%; */
+    width: 100%;
+}
+
+input{
+    text-align: center;
+    
+}
+
+button{
+    margin: auto;
+}
+
+.message-content > p{
+    margin-bottom: 0%;
+}
+
+@media screen and (max-width:1400px){
+    body{
+        background-color: rgb(219, 212, 212);
+
+    }
+    .container{
+       height: 100vh; 
+       background-color: rgb(219, 212, 212);
+       padding: 0%;
+       width: 100%;
+    }
+    input{
+        display: flex;
+        width: 90%;
+        margin: auto;
+    }
+    button{
+        display: flex;
+    }
+    .message-content{
+        background-color: rgb(219, 212, 212);
+    }
+   
+   
+}
+
+
